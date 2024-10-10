@@ -23,7 +23,7 @@ FROM openjdk:17-jdk-alpine
 COPY --from=build /app/target/*.jar /app/app.jar
 
 # Expose the port on which the Spring Boot application runs
-EXPOSE 80
+EXPOSE 8080
 
 # Define the entry point to run the application
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
