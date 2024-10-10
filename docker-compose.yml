@@ -1,0 +1,28 @@
+version: '3'
+services:
+  mariadb:
+    image: mariadb:10.5
+    environment:
+      MYSQL_ROOT_PASSWORD: door_spring
+      MYSQL_DATABASE: door_spring
+      MYSQL_USER: door_spring
+      MYSQL_PASSWORD: door_spring
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+  springboot-app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mariadb
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mariadb://mariadb:3306/door_spring
+      SPRING_DATASOURCE_USERNAME: door_spring
+      SPRING_DATASOURCE_PASSWORD: door_spring
+    volumes:
+      - ./target:/app
+volumes:
+  mariadb_data:
